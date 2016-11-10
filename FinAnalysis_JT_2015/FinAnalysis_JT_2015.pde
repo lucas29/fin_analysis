@@ -1,11 +1,5 @@
 //JT 2015
-import gifAnimation.*;
-GifMaker gifExport;
-int frames = 0;
-int totalFrames = 120;
-
-GifRecorder recorder = new GifRecorder(this);
-
+GIFAnimeWriter gif;
 //private static final int PLOTS_COUNT = 3000;
 //ROA
 float total_asset = 4558;
@@ -38,11 +32,8 @@ private Plot[] earning_plots = new Plot[roa];
 private Plot[] operatingProfit_plots = new Plot[roa];
 private Plot[] netProfit_plots = new Plot[roa];
 
-GIFAnimeWriter gif;
-
 void setup() {
   gif = new GIFAnimeWriter("test.gif",GIFAnimeWriter.LOOP);
-  
   size(800, 800, P3D);
   frameRate(20);
   println(roa); //for debugging
@@ -64,13 +55,6 @@ void setup() {
   }
   stroke(100+red, 150, 100+blue, 255);
   strokeWeight(2);
-  
-  // GIF animation setting
-  gifExport = new GifMaker(this, "export.gif", 100);
-  gifExport.setRepeat(0); // endless loop
-  gifExport.setQuality(10); // quality (default: 10)
-  gifExport.setDelay(20); // set animation resolution to 50ms(20fps)
-  //gifExport.setSize(800, 800);
 }
 
 void draw() {
@@ -98,30 +82,10 @@ void draw() {
   for (Plot netProfit_p : netProfit_plots) {
     point(netProfit_p.x, netProfit_p.y, netProfit_p.z);
   }
-
-  //saveFrame("frames/######.tif");
-  //20fps * 8 = 8sec
-  /*
-  if(frames < totalFrames){
-    gifExport.addFrame(); // add frame
-    frames++;
-  } else {
-    gifExport.finish(); // end and save gif
-    frames++;
-    println("gif saved");
-    exit();
-  }
-  */
   
   gif.stock(g);
   if (frameCount >= 100) exit();
   
-  recorder.onDraw();
-  
-}
-
-void mouseClicked() {
-  recorder.recordForSeconds("out.gif", 1);
 }
 
 
