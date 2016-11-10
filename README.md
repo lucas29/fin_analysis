@@ -27,7 +27,8 @@
 - FinAnalysis_JT_2015
     - GifAnimeWriter
         - http://3846masa.hatenablog.jp/entry/oldmt-processing-animationgif
-        - こちらで公開されているものを使わせていただきました！
+        - processingからgifへの書き出しは、こちらで公開されているものを使わせていただきました！
+        - ありがとうございます。
 
 ## Usage
 
