@@ -1,42 +1,62 @@
 //JT 2015
+String company = "jt2015.csv";
+
 GIFAnimeWriter gif;
-//private static final int PLOTS_COUNT = 3000;
-//ROA
-float total_asset = 4558;
-float net_profit = 490;
 
-//size of circle : Earning, operating profit, net profit(bottom line)
-float magnifying_ratio = 15;
-float earning_radius = magnifying_ratio*pow(2253, (1.0/3.0));
-float operatingProfit_radius = magnifying_ratio*pow(565, (1.0/3.0));
-float netProfit_radius = magnifying_ratio*pow(net_profit, (1.0/3.0));
+Table table;
 
-//standardize ROA by deviding by sqrt(net_profit) which is in proportion to surface area of the core sphere
-int roa = int((net_profit*800000/total_asset)/sqrt(net_profit)); //about 1000-3000
+private Plot[] earning_plots;
+private Plot[] operatingProfit_plots;
+private Plot[] netProfit_plots;
 
-//liquid assets and liquid dept
-float liquid_assets = 1798;
-float liquid_dept = 1265;
-//if ratio > 1.2, it is safe (blue) / if ratio < 0.8 it is dangerous (red).
-//bigger the liquid_ratio, the safer it gets
-float liquid_ratio = liquid_assets/liquid_dept;
-int blue = 0;
-int red = 0;
+float total_asset;
+float net_profit;
+float operatingProfit;
+float earning;
+float liquid_assets;
+float liquid_dept;
+float net_asset;
+float debt_with_interest;
 
-//leverage ratio
-float net_asset = 2522;
-float debt_with_interest = 246;
-float leverage_ratio = debt_with_interest / net_asset;
-
-private Plot[] earning_plots = new Plot[roa];
-private Plot[] operatingProfit_plots = new Plot[roa];
-private Plot[] netProfit_plots = new Plot[roa];
+float leverage_ratio;
 
 void setup() {
+
+  table = loadTable(company);
+    total_asset = table.getInt(1,2);
+    earning = table.getInt(2,2);
+    operatingProfit = table.getInt(3,2);
+    net_profit = table.getInt(4,2);
+    liquid_assets = table.getInt(5,2);
+    liquid_dept = table.getInt(6,2);
+    net_asset = table.getInt(7,2);
+    debt_with_interest = table.getInt(8,2);
+
+  //size of circle : Earning, operating profit, net profit(bottom line)
+  float magnifying_ratio = 15;
+  float earning_radius = magnifying_ratio*pow(earning, (1.0/3.0));
+  float operatingProfit_radius = magnifying_ratio*pow(operatingProfit, (1.0/3.0));
+  float netProfit_radius = magnifying_ratio*pow(net_profit, (1.0/3.0));
+
+  //standardize ROA by deviding by sqrt(net_profit) which is in proportion to surface area of the core sphere
+  int roa = int((net_profit*800000/total_asset)/sqrt(net_profit)); //about 1000-3000
+
+  //if ratio > 1.2, it is safe (blue) / if ratio < 0.8 it is dangerous (red).
+  //bigger the liquid_ratio, the safer it gets
+  float liquid_ratio = liquid_assets/liquid_dept;
+  int blue = 0;
+  int red = 0;
+
+  //leverage ratio
+  leverage_ratio = debt_with_interest / net_asset;
+
+  earning_plots = new Plot[roa];
+  operatingProfit_plots = new Plot[roa];
+  netProfit_plots = new Plot[roa];
+  
   gif = new GIFAnimeWriter("test.gif",GIFAnimeWriter.LOOP);
   size(800, 800, P3D);
   frameRate(20);
-  println(roa); //for debugging
 
   for (int i = 0; i < roa; i++) {
     earning_plots[i] = new Plot(earning_radius);
@@ -84,8 +104,7 @@ void draw() {
   }
   
   gif.stock(g);
-  if (frameCount >= 100) exit();
-  
+  if (frameCount >= 100) exit();  
 }
 
 
