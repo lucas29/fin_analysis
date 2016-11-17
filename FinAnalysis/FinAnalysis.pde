@@ -1,5 +1,5 @@
 //JT 2015
-String company = "softbank2015.csv";
+String company = "panasonic2015.csv";
 
 GIFAnimeWriter gif;
 
@@ -54,7 +54,7 @@ void setup() {
   operatingProfit_plots = new Plot[roa];
   netProfit_plots = new Plot[roa];
   
-  gif = new GIFAnimeWriter("test.gif",GIFAnimeWriter.LOOP);
+  gif = new GIFAnimeWriter(company+".gif",GIFAnimeWriter.LOOP);
   size(800, 800, P3D);
   frameRate(20);
 
