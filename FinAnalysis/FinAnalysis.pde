@@ -1,5 +1,5 @@
 //JT 2015
-String company = "panasonic2015.csv";
+String company = "jt2015.csv";
 
 GIFAnimeWriter gif;
 
